@@ -1,0 +1,33 @@
+{
+  "name": "@background404/node-red-contrib-pyodide",
+  "version": "0.0.1",
+  "description": "Node to execute Python code with Pyodide in Node-RED",
+  "main": "node/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/404background/node-red-contrib-pyodide.git"
+  },
+  "keywords": [
+    "node-red",
+    "pyodide",
+    "python",
+    "WebAssembly"
+  ],
+  "author": "background404",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/404background/node-red-contrib-pyodide/issues"
+  },
+  "homepage": "https://github.com/404background/node-red-contrib-pyodide#readme",
+  "dependencies": {
+    "pyodide": "^0.27.7"
+  },
+  "node-red": {
+    "nodes": {
+      "pyodide": "node/pyodide/pyodide.js"
+    }
+  }
+}

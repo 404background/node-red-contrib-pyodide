@@ -1,0 +1,36 @@
+<script type="text/html" data-help-name="pyodide">
+    <p>Execute Python code within Node-RED using Pyodide.</p>
+    
+    <h3>Details</h3>
+    <p>The Python code has access to the <code>msg</code> object containing the message payload and properties. Modify the <code>msg</code> object to pass data to the next node.</p>
+    
+    <h3>Examples</h3>
+    <p>Basic message modification:</p>
+    <pre>msg["payload"] = "Hello from Python"</pre>
+    
+    <p>Mathematical operations:</p>
+    <pre>
+import math
+result = math.sqrt(msg["payload"])
+msg["payload"] = result
+    </pre>
+    
+    <p>Working with data structures:</p>
+    <pre>
+data = msg["payload"]
+data["processed"] = True
+data["timestamp"] = 1640995200
+msg["payload"] = data
+    </pre>
+    
+    <p>System information:</p>
+    <pre>
+import sys
+import platform
+
+msg["payload"] = {
+    "python_version": sys.version,
+    "platform": platform.platform()
+}
+    </pre>
+</script>

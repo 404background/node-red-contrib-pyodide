@@ -1,0 +1,36 @@
+<script type="text/html" data-help-name="pyodide">
+    <p>Pyodideを使用して、Node-RED内でPythonコードを実行します。</p>
+    
+    <h3>詳細</h3>
+    <p>Pythonコードは<code>msg</code>オブジェクトにアクセスでき、メッセージのペイロードやプロパティを含みます。<code>msg</code>オブジェクトを変更して次のノードにデータを渡してください。</p>
+    
+    <h3>例</h3>
+    <p>基本的なメッセージ変更:</p>
+    <pre>msg["payload"] = "Hello from Python"</pre>
+    
+    <p>数学的操作:</p>
+    <pre>
+import math
+result = math.sqrt(msg["payload"])
+msg["payload"] = result
+    </pre>
+    
+    <p>データ構造の操作:</p>
+    <pre>
+data = msg["payload"]
+data["processed"] = True
+data["timestamp"] = 1640995200
+msg["payload"] = data
+    </pre>
+    
+    <p>システム情報の取得:</p>
+    <pre>
+import sys
+import platform
+
+msg["payload"] = {
+    "python_version": sys.version,
+    "platform": platform.platform()
+}
+    </pre>
+</script>

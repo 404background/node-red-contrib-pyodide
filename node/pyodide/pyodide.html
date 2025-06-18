@@ -1,0 +1,79 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pyodide',{
+        category: 'python',
+        color: '#8B5CF6',
+        defaults: {
+            name: {value:""},
+            pythonCode: {value:`import sys
+import platform
+
+msg["payload"] = {
+    "python_version": sys.version,
+    "platform": platform.platform(),
+}`}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "function.svg",
+        label: function() {
+            return this.name||"pyodide";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-pythonCode-editor',
+                mode: 'ace/mode/python',
+                focus: true,
+                value: $("#node-input-pythonCode").val()
+            });
+            
+            this.editor.focus();
+        },
+        oneditsave: function() {
+            var annot = this.editor.getSession().getAnnotations();
+            this.noerr = 0;
+            $("#node-input-noerr").val(0);
+            for (var k=0; k < annot.length; k++) {
+                if (annot[k].type === "error") {
+                    $("#node-input-noerr").val(annot.length);
+                    this.noerr = annot.length;
+                }
+            }
+            $("#node-input-pythonCode").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function() {
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i=0; i<rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height",height+"px");
+            this.editor.resize();
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="pyodide">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="pyodide.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]pyodide.label.name">
+    </div>
+    <div class="form-row" style="margin-bottom:0;">
+        <label for="node-input-pythonCode"><i class="fa fa-file-code-o"></i> <span data-i18n="pyodide.label.function"></span></label>
+        <input type="hidden" id="node-input-pythonCode" autofocus="autofocus">
+        <input type="hidden" id="node-input-noerr">
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-pythonCode-editor" ></div>
+    </div>
+</script>

@@ -1,0 +1,8 @@
+{
+    "pyodide": {
+        "label": {
+            "name": "Name",
+            "function": "Code"
+        }
+    }
+}
