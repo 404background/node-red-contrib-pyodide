@@ -1,10 +1,10 @@
 # node-red-contrib-pyodide
 
-A Node-RED node that allows you to execute Python code using Pyodide (Python scientific stack compiled to WebAssembly).
+A Node-RED node that allows you to execute Python code using Pyodide.
 
 ## Overview
 
-This node brings the power of Python to Node-RED without requiring a separate Python installation. It uses Pyodide to run Python code directly in the Node.js environment, making it perfect for data processing, mathematical calculations, and scientific computing within your Node-RED flows.
+This node brings the power of Python to Node-RED without requiring a separate Python installation. It uses Pyodide to run Python code directly in the Node.js environment.
 
 ## Features
 
