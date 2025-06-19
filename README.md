@@ -29,3 +29,15 @@ For example, You can use matplotlib in the pyodide node to generate graphs and p
 ![Pyodide Config Node](images/pyodide-config.png)
 
 ![Matplotlib Flow](images/matplotlib.png)
+
+# Others
+
+Using Pyodide Part 1 (Execute in Browser)  
+<https://404background.com/program/pyodide/>
+
+Using Pyodide Part 2 (Execute with Node.js)  
+<https://404background.com/program/pyodide-2/>
+
+My Node: python-venv node  
+<https://flows.nodered.org/node/@background404/node-red-contrib-python-venv>
+
