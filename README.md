@@ -11,38 +11,21 @@ This node brings the power of Python to Node-RED without requiring a separate Py
 - ✨ Execute Python code directly in Node-RED
 - 🔧 No Python installation required
 - 🌐 Web-based Python using WebAssembly (Pyodide)
-- 🔄 Seamless integration with Node-RED message flow
+- � Automatic Python package loading (numpy, matplotlib, pandas, etc.)
+- �🔄 Seamless integration with Node-RED message flow
 
-## Sample Flow
-
-![Sample Flow](images/flows.png)
-![Node Editor](images/edit.png)
-
+## Usage
+You can execute Python code with Pyodide.  
 The sample flow demonstrates basic usage of the pyodide node with an inject node and debug node.
 
-## Example
+![Sample Flow](images/flows.png)
 
-### Basic Usage
-```python
-msg["payload"] = "Hello from Python!"
-```
+![Pyodide Node](images/pyodide.png)
 
-### Mathematical Operations
-```python
-import math
-result = math.sqrt(msg["payload"])
-msg["payload"] = result
-```
+For example, You can use matplotlib in the pyodide node to generate graphs and pass them to the next node for display. The pyodide-config node loads the matplotlib package automatically.
 
-### System Information
-```python
-import sys
-import platform
+![Matplotlib Node](images/matplotlib-node.png)
 
-msg["payload"] = {
-    "python_version": sys.version,
-    "platform": platform.platform(),
-    "pyodide_version": "0.27.7",
-    "message": "Python is running in Pyodide!"
-}
-```
+![Pyodide Config Node](images/pyodide-config.png)
+
+![Matplotlib Flow](images/matplotlib.png)

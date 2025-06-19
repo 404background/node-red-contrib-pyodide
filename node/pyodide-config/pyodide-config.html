@@ -1,0 +1,83 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pyodide-config',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            packages: {value:[]}
+        },
+        label: function() {
+            return this.name || "pyodide-config";
+        },
+        oneditprepare: function() {
+            const node = this;
+            function generatePackageRow(i, pkg) {
+                const container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px; border-bottom: 1px solid #ccc;"});
+                const row = $('<div/>').appendTo(container);
+                const packageInput = $('<input/>',{class:"node-input-package-name",type:"text",style:"margin-left: 5px; width: calc(100% - 40px);", placeholder:"Package name (e.g., numpy, matplotlib, pandas)"}).appendTo(row);
+                const finalSpan = $('<span/>',{style:"float: right; margin-right: 10px;"}).appendTo(row);
+                const deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalSpan);
+                $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+                packageInput.val(pkg);
+                deleteButton.click(function() {
+                    container.css({"background":"#fee"});
+                    container.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                }); 
+                return container;
+            }
+            function addPackage() {
+                const packageList = $("#node-config-input-package-container");
+                const packageRow = generatePackageRow(packageList.children().length, "");
+                packageRow.appendTo(packageList);
+            }
+            $("#node-config-input-add-package").click(function() {
+                addPackage();
+            });
+
+            const packages = this.packages || [];
+            const packageList = $("#node-config-input-package-container");
+            packageList.empty();
+            packages.forEach(function(pkg) {
+                if (pkg && pkg.trim() !== '') {
+                    generatePackageRow(0, pkg).appendTo(packageList);
+                }
+            });
+        },
+        oneditsave: function() {
+            const packages = [];
+            $("#node-config-input-package-container").children().each(function(i) {
+                const packageName = $(this).find(".node-input-package-name").val().trim();
+                if (packageName !== '') {
+                    packages.push(packageName);
+                }
+            });
+            this.packages = packages;
+        },
+        oneditresize: function(size) {
+            const rows = $("#dialog-form>div:not(.node-input-package-container-row)");
+            let height = $("#dialog-form").height();
+            for (let i=0; i<rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            const editorRow = $("#dialog-form>div.node-input-package-container-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $("#node-config-input-package-container").css("height",height+"px");
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="pyodide-config">    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="pyodide-config.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]pyodide-config.label.name">
+    </div>    <div class="form-row node-input-package-container-row">
+        <label><i class="fa fa-list"></i> <span data-i18n="pyodide-config.label.packages"></span></label>
+        <div style="min-height: 150px; border: 1px solid #ccc;">
+            <ol id="node-config-input-package-container" style="list-style-type:none; margin: 0; padding: 0;"></ol>
+        </div>
+        <a href="#" class="editor-button editor-button-small" id="node-config-input-add-package" style="margin-top: 4px;"><i class="fa fa-plus"></i> Add Package</a>
+    </div>
+    <div class="form-tips">
+        <span data-i18n="pyodide-config.tip"></span>
+    </div>
+</script>

@@ -1,0 +1,9 @@
+{
+    "pyodide-config": {
+        "label": {
+            "name": "Name",
+            "packages": "Packages"
+        },
+        "tip": "Package loading may take some time when first used."
+    }
+}

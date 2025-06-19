@@ -31,7 +31,8 @@
   "node-red": {
     "version": ">=1.3.7",
     "nodes": {
-      "pyodide": "node/pyodide/pyodide.js"
+      "pyodide": "node/pyodide/pyodide.js",
+      "pyodide-config": "node/pyodide-config/pyodide-config.js"
     }
   }
 }

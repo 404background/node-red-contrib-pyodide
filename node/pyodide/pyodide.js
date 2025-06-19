@@ -9,9 +9,8 @@ module.exports = function(RED) {
         if (pyodideInstance) {
             return pyodideInstance;
         }
-        
-        if (!pyodidePromise) {
-            const pyodidePath = path.resolve(__dirname, "../../node_modules/pyodide/");
+          if (!pyodidePromise) {
+            const pyodidePath = path.join(__dirname, "../../node_modules/pyodide/");
             pyodidePromise = loadPyodide({
                 indexURL: pyodidePath,
             });
@@ -30,13 +29,18 @@ import platform
 
 msg["payload"] = {
     "python_version": sys.version,
-    "platform": platform.platform(),
-    "pyodide_version": "0.27.7",
-    "message": "Python is running in Pyodide!"
+    "platform": platform.platform()
 }`;
+        
+        const configNode = RED.nodes.getNode(config.configuration);
+        
         node.on('input', async function(msg, send, done) {
             try {
                 const pyodide = await initializePyodide();
+                
+                if (configNode) {
+                    await configNode.loadPackages(pyodide);
+                }
                 
                 pyodide.globals.set("msg", pyodide.toPy(msg));
                 
