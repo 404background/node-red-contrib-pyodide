@@ -10,7 +10,7 @@ module.exports = function(RED) {
             return pyodideInstance;
         }
           if (!pyodidePromise) {
-            const pyodidePath = path.join(__dirname, "../../node_modules/pyodide/");
+            const pyodidePath = path.dirname(require.resolve('pyodide/package.json'));
             pyodidePromise = loadPyodide({
                 indexURL: pyodidePath,
             });
